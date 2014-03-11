@@ -1,0 +1,3 @@
+#include"matrix_size.h"
+
+double** multiply(double**, m_size, double**, m_size);

@@ -7,8 +7,8 @@
 class conjugateGradientSolver
 {
 public:
-	conjugateGradientSolver(double**, int);
-	double* getSolve();
+	conjugateGradientSolver();
+	double* getSolve(double**, int);
 	void setAccuracy(double);
 	~conjugateGradientSolver();
 	

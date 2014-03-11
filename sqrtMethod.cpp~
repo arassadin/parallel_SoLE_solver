@@ -1,15 +1,8 @@
 #include"sqrtMethod.h"
 
-sqrtMethodSolver::sqrtMethodSolver(double** m, int size)
+sqrtMethodSolver::sqrtMethodSolver()
 {
-	systemSize=size;
-	
-	matrix=new std::complex<double>*[systemSize];
-	for(int j=0; j<systemSize; j++)
-		matrix[j]=new std::complex<double>[systemSize+1];
-	for(int i=0; i<systemSize; i++)
-		for(int j=0; j<systemSize+1; j++)
-			matrix[i][j]=std::complex<double>(m[i][j], 0.0);
+
 }
 
 bool sqrtMethodSolver::systemChecking(int pointer)
@@ -27,10 +20,20 @@ void sqrtMethodSolver::freeMemory()
 		delete matrix[i];
 	delete matrix;
 	delete tmpMatrix;
+	delete solve;
 }
 
-double* sqrtMethodSolver::getSolve()
+double* sqrtMethodSolver::getSolve(double** m, int size)
 {
+	systemSize=size;
+	
+	matrix=new std::complex<double>*[systemSize];
+	for(int j=0; j<systemSize; j++)
+		matrix[j]=new std::complex<double>[systemSize+1];
+	for(int i=0; i<systemSize; i++)
+		for(int j=0; j<systemSize+1; j++)
+			matrix[i][j]=std::complex<double>(m[i][j], 0.0);
+			
 	if(systemSize<2)
 	{
 		std::cerr << "Bad Matrix Size!" << std::endl;

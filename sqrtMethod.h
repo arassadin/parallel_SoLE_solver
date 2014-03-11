@@ -6,8 +6,8 @@
 class sqrtMethodSolver
 {
 public:
-	sqrtMethodSolver(double**, int);
-	double* getSolve();
+	sqrtMethodSolver();
+	double* getSolve(double**, int);
 	~sqrtMethodSolver();
 	
 private:

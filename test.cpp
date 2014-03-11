@@ -23,15 +23,15 @@ int main()
 		for(int j=0; j<size+1; j++)
 			cin>>matrix[i][j];
 			
-	sqrtMethodSolver* sms=new sqrtMethodSolver(matrix, size);	
-	double* x=sms->getSolve();
+	sqrtMethodSolver* sms=new sqrtMethodSolver();	
+	double* x=sms->getSolve(matrix, size);
 	for(int j=0; j<size; j++)
 		cout << x[j] << "\t";
 	cout << endl << "----------------------" << endl;
 	
-	conjugateGradientSolver* cgs=new conjugateGradientSolver(matrix, size);
+	conjugateGradientSolver* cgs=new conjugateGradientSolver();
 	cgs->setAccuracy(0.000001);
-	x=cgs->getSolve();
+	x=cgs->getSolve(matrix, size);
 	for(int j=0; j<size; j++)
 		cout << x[j] << "\t";
 	cout << endl << "----------------------" << endl;

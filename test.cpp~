@@ -9,7 +9,7 @@ int main()
 {
 	int size;
 	cout.precision(4);
-	FILE* f=freopen("helpful/input_symmetrical", "r", stdin);
+	FILE* f=freopen("helpful/input_symmetrical_1000", "r", stdin);
 	cin >> size;
 	if(size<2)
 	{

@@ -2,7 +2,7 @@
 #include<complex>
 #include<math.h>
 #include<stdio.h>
-#include"../../useful/matrixes/matrixSolver.h"
+#include"helpful/matrixes/matrixSolver.h"
 
 class conjugateGradientSolver
 {

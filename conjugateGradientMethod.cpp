@@ -1,19 +1,7 @@
 #include"conjugateGradientMethod.h"
 
-conjugateGradientSolver::conjugateGradientSolver(double** m, int size)
+conjugateGradientSolver::conjugateGradientSolver()
 {
-	systemSize=size;
-	matrix=new double*[systemSize];
-	for(int i=0; i<systemSize; i++)
-		matrix[i]=new double[systemSize];
-	for(int i=0; i<systemSize; i++)
-		for(int j=0; j<systemSize; j++)
-			matrix[i][j]=m[i][j];
-	constantTerms=new double*[systemSize];
-	for(int i=0; i<systemSize; i++)
-		constantTerms[i]=new double[1];
-	for(int i=0; i<systemSize; i++)
-		constantTerms[i][0]=m[i][systemSize];
 	accuracy=0.0001;
 }
 
@@ -47,8 +35,21 @@ bool conjugateGradientSolver::stopCondition(double** _discrepancy)
 	return status;
 }
 
-double* conjugateGradientSolver::getSolve()
+double* conjugateGradientSolver::getSolve(double** m, int size)
 {
+	systemSize=size;
+	matrix=new double*[systemSize];
+	for(int i=0; i<systemSize; i++)
+		matrix[i]=new double[systemSize];
+	for(int i=0; i<systemSize; i++)
+		for(int j=0; j<systemSize; j++)
+			matrix[i][j]=m[i][j];
+	constantTerms=new double*[systemSize];
+	for(int i=0; i<systemSize; i++)
+		constantTerms[i]=new double[1];
+	for(int i=0; i<systemSize; i++)
+		constantTerms[i][0]=m[i][systemSize];
+		
 	if(systemSize<2)
 	{
 		std::cerr << "Bad systemSize!" << std::endl;

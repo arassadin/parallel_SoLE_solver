@@ -28,9 +28,12 @@ double* sqrtMethodSolver::getSolve(double** m, int size)
 	systemSize=size;
 	
 	matrix=new std::complex<double>*[systemSize];
+#pragma omp parallel for
 	for(int j=0; j<systemSize; j++)
 		matrix[j]=new std::complex<double>[systemSize+1];
+#pragma omp parallel for
 	for(int i=0; i<systemSize; i++)
+#pragma omp parallel for
 		for(int j=0; j<systemSize+1; j++)
 			matrix[i][j]=std::complex<double>(m[i][j], 0.0);
 			
@@ -53,9 +56,14 @@ double* sqrtMethodSolver::getSolve(double** m, int size)
 				return NULL;
 			};
 	tmpMatrix=new std::complex<double>[systemSize+1];
-	for(int i=0; i<systemSize; i++)
+	matrix[0][0]=pow(matrix[0][0], 0.5);
+#pragma omp parallel for
+	for(int j=1; j<systemSize+1; j++)
+		matrix[0][j]=matrix[0][j]/matrix[0][0];
+	for(int i=1; i<systemSize; i++)
 	{
-		for(int j=0; j<systemSize+1; j++)
+#pragma omp parallel for
+		for(int j=i; j<systemSize+1; j++)
 			tmpMatrix[j]=matrix[i][j];
 		std::complex<double> sum(0.0, 0.0);
 		for(int k=0; k<i; k++)
@@ -63,6 +71,7 @@ double* sqrtMethodSolver::getSolve(double** m, int size)
 			sum+=pow(matrix[k][i], 2.0);
 		}
 		matrix[i][i]=pow(tmpMatrix[i]-sum, 0.5);
+#pragma omp parallel for
 		for(int j=i+1; j<systemSize+1; j++)
 		{
 			std::complex<double> sum(0.0,0.0);
@@ -84,6 +93,7 @@ double* sqrtMethodSolver::getSolve(double** m, int size)
 	}
 	
 	double* realSolve=new double[systemSize+1];
+#pragma omp parallel for
 	for(int j=0; j<systemSize+1; j++)
 		realSolve[j]=solve[j].real();
 		

@@ -18,5 +18,6 @@ private:
 
 private:
 	bool systemChecking(int);
-	void freeMemory();
+	void freeMatrix();
+	void freeAllMemory();
 };

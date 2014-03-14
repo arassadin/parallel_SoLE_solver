@@ -1,7 +1,7 @@
 CCSHELL=/bin/bash
 CC=g++
 CUR_DIRECTORY=$(shell pwd)
-MATRIX_SOLVER_DIRECTORY=../../useful/matrixes
+MATRIX_SOLVER_DIRECTORY=helpful/matrixes
 
 all: build
 

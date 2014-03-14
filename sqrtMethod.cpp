@@ -14,18 +14,28 @@ bool sqrtMethodSolver::systemChecking(int pointer)
 	return flag;
 }
 
-void sqrtMethodSolver::freeMemory()
+void sqrtMethodSolver::freeMatrix()
 {
 	for(int i=0; i<systemSize; i++)
 		delete matrix[i];
 	delete matrix;
+}
+
+void sqrtMethodSolver::freeAllMemory()
+{
+	freeMatrix();
 	delete tmpMatrix;
 	delete solve;
 }
 
 double* sqrtMethodSolver::getSolve(double** m, int size)
 {
-	systemSize=size;
+	systemSize=size;	
+	if(systemSize<2)
+	{
+		std::cerr << "Bad Matrix Size!" << std::endl;
+		return NULL;
+	}
 	
 	matrix=new std::complex<double>*[systemSize];
 #pragma omp parallel for
@@ -36,25 +46,28 @@ double* sqrtMethodSolver::getSolve(double** m, int size)
 #pragma omp parallel for
 		for(int j=0; j<systemSize+1; j++)
 			matrix[i][j]=std::complex<double>(m[i][j], 0.0);
-			
-	if(systemSize<2)
-	{
-		std::cerr << "Bad Matrix Size!" << std::endl;
-		return NULL;
-	};
+	
+	bool checkingFlag(true);
 	for(int j=0; j<systemSize+1; j++)
 		if(!systemChecking(j))
 		{
 			std::cerr << "Non equatable matrix!" << std::endl;
 			return NULL;
-		};
+		}
+#pragma omp parallel for shared(checkingFlag)
 	for(int i=0; i<systemSize; i++)
+	#pragma omp parallel for shared(checkingFlag)
 		for(int j=0; j<systemSize; j++)
 			if(matrix[i][j]!=matrix[j][i])
 			{
-				std::cerr << "Non symmetrical matrix!" << std::endl;
-				return NULL;
-			};
+				checkingFlag=false;
+			}
+	if(!checkingFlag)
+	{
+		std::cerr << "Non symmetrical matrix!" << std::endl;
+		freeMatrix();
+		return NULL;
+	}
 	tmpMatrix=new std::complex<double>[systemSize+1];
 	matrix[0][0]=pow(matrix[0][0], 0.5);
 #pragma omp parallel for
@@ -97,7 +110,7 @@ double* sqrtMethodSolver::getSolve(double** m, int size)
 	for(int j=0; j<systemSize+1; j++)
 		realSolve[j]=solve[j].real();
 		
-	freeMemory();
+	freeAllMemory();
 		
 	return realSolve;
 }

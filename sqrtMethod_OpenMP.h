@@ -2,6 +2,7 @@
 #include<complex>
 #include<math.h>
 #include<stdio.h>
+#include<omp.h>
 
 class sqrtMethodSolver_OpenMP
 {

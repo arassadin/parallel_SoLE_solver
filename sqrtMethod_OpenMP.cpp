@@ -1,11 +1,11 @@
-#include"sqrtMethod.h"
+#include"sqrtMethod_OpenMP.h"
 
-sqrtMethodSolver::sqrtMethodSolver()
+sqrtMethodSolver_OpenMP::sqrtMethodSolver_OpenMP()
 {
 
 }
 
-bool sqrtMethodSolver::systemChecking(int pointer)
+bool sqrtMethodSolver_OpenMP::systemChecking(int pointer)
 {
 	bool flag=false;
 	for(int i=0; i<systemSize; i++)
@@ -14,21 +14,21 @@ bool sqrtMethodSolver::systemChecking(int pointer)
 	return flag;
 }
 
-void sqrtMethodSolver::freeMatrix()
+void sqrtMethodSolver_OpenMP::freeMatrix()
 {
 	for(int i=0; i<systemSize; i++)
 		delete matrix[i];
 	delete matrix;
 }
 
-void sqrtMethodSolver::freeAllMemory()
+void sqrtMethodSolver_OpenMP::freeAllMemory()
 {
 	freeMatrix();
 	delete tmpMatrix;
 	delete solve;
 }
 
-double* sqrtMethodSolver::getSolve(double** m, int size)
+double* sqrtMethodSolver_OpenMP::getSolve(double** m, int size)
 {
 	systemSize=size;	
 	if(systemSize<2)

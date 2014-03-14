@@ -1,4 +1,4 @@
-#include"conjugateGradientMethod.h"
+#include"conjugateGradientMethod_direct.h"
 
 conjugateGradientSolver::conjugateGradientSolver()
 {

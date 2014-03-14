@@ -1,3 +1,7 @@
 *~
 *.out
 *.[ao]
+test.cpp
+psdirect
+psopenmp
+psmpi

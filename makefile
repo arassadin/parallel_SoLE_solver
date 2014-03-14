@@ -1,12 +1,17 @@
 CCSHELL=/bin/bash
 CC=g++
 CUR_DIRECTORY=$(shell pwd)
-MATRIX_SOLVER_DIRECTORY=helpful/matrixes
+MATRIX_SOLVER_DIR=helpful/matrixes
 
-all: build
+all: direct openmp mpi
 
-build:
-	$(CC) test.cpp conjugateGradientMethod.cpp sqrtMethod.cpp $(MATRIX_SOLVER_DIRECTORY)/matrixSolver.cpp -fopenmp
+direct: 
+	$(CC) test.cpp conjugateGradientMethod_direct.cpp sqrtMethod_direct.cpp $(MATRIX_SOLVER_DIR)/matrixSolver.cpp -o psdirect
+
+openmp: 
+	$(CC) test.cpp conjugateGradientMethod_direct.cpp sqrtMethod_OpenMP.cpp $(MATRIX_SOLVER_DIR)/matrixSolver.cpp -fopenmp -o psopenmp
+	
+mpi:
 
 clean:
-	rm *~ *.out
+	rm *~ *.out psdirect psopenmp psmpi

@@ -3,12 +3,12 @@
 #include<math.h>
 #include<stdio.h>
 
-class sqrtMethodSolver
+class sqrtMethodSolver_direct
 {
 public:
-	sqrtMethodSolver();
+	sqrtMethodSolver_direct();
 	double* getSolve(double**, int);
-	~sqrtMethodSolver();
+	~sqrtMethodSolver_direct();
 	
 private:
 	int systemSize;

@@ -82,27 +82,39 @@ double* sqrtMethodSolver_OpenMP::getSolve(double** m, int size)
 		#pragma omp parallel for
 		for(int j=i; j<systemSize+1; j++)
 			tmpMatrix[j]=matrix[i][j];
+		std::complex<double> sum(0.0, 0.0);
+		/*
 		double sum_r(0.0);
 		double sum_i(0.0);
 		#pragma omp parallel for reduction(+:sum_r,sum_i)
+		*/
 		for(int k=0; k<i; k++)
 		{
+			/*
 			sum_r+=matrix[k][i].real()*matrix[k][i].real()-matrix[k][i].imag()*matrix[k][i].imag();
 			sum_i+=2.0*matrix[k][i].real()*matrix[k][i].imag();
+			*/
+			sum+=pow(matrix[k][i], 2.0);
 		}
-		matrix[i][i]=pow(tmpMatrix[i]-std::complex<double>(sum_r, sum_i), 0.5);
+		matrix[i][i]=pow(tmpMatrix[i]-sum, 0.5);
 		#pragma omp parallel for
 		for(int j=i+1; j<systemSize+1; j++)
 		{
+			std::complex<double> sum(0.0, 0.0);
+			/*
 			sum_r=0.0;
 			sum_i=0.0;
 			#pragma omp parallel for reduction(+:sum_r,sum_i)
+			*/
 			for(int k=0; k<i; k++)
 			{
+				/*
 				sum_r+=matrix[k][i].real()*matrix[k][j].real()-matrix[k][i].imag()*matrix[k][j].imag();
-				sum_i+=matrix[k][i].imag()*matrix[k][j].real()-matrix[k][i].real()*matrix[k][j].imag();
+				sum_i+=matrix[k][i].imag()*matrix[k][j].real()+matrix[k][i].real()*matrix[k][j].imag();
+				*/
+				sum+=(matrix[k][i]*matrix[k][j]);
 			}
-			matrix[i][j]=(tmpMatrix[j]-std::complex<double>(sum_r, sum_i))/matrix[i][i];
+			matrix[i][j]=(tmpMatrix[j]-sum)/matrix[i][i];
 		}
 	}
 	

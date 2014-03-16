@@ -10,15 +10,12 @@ MATRIX_SOLVER_DIR=helpful/matrixes
 all: direct openmp mpi
 
 direct:
-	export PARALLEL_SOLVER_VERSION=0
 	$(CC) test.cpp conjugateGradientMethod_direct.cpp sqrtMethod_direct.cpp $(MATRIX_SOLVER_DIR)/matrixSolver.cpp $(DIRECT_BUILD_FLAGS)
 
 openmp:
-	export PARALLEL_SOLVER_VERSION=1
 	$(CC) test.cpp conjugateGradientMethod_OpenMP.cpp sqrtMethod_OpenMP.cpp $(MATRIX_SOLVER_DIR)/matrixSolver.cpp $(OPENMP_BUILD_FLAGS)
 	
 mpi:
-	export PARALLEL_SOLVER_VERSION=2
 	$(MPI_CC) test.cpp conjugateGradientMethod_MPI.cpp sqrtMethod_MPI.cpp $(MATRIX_SOLVER_DIR)/matrixSolver.cpp $(MPI_BUILD_FLAGS)
 
 clean:

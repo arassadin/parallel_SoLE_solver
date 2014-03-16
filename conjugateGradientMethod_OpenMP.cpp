@@ -1,16 +1,16 @@
-#include"conjugateGradientMethod_direct.h"
+#include"conjugateGradientMethod_OpenMP.h"
 
-conjugateGradientSolver_direct::conjugateGradientSolver_direct()
+conjugateGradientSolver_OpenMP::conjugateGradientSolver_OpenMP()
 {
 	accuracy=0.0001;
 }
 
-void conjugateGradientSolver_direct::setAccuracy(double _accuracy)
+void conjugateGradientSolver_OpenMP::setAccuracy(double _accuracy)
 {
 	accuracy=_accuracy;
 }
 
-bool conjugateGradientSolver_direct::systemChecking(int pointer)
+bool conjugateGradientSolver_OpenMP::systemChecking(int pointer)
 {
 	bool flag=false;
 	for(int i=0; i<systemSize; i++)
@@ -19,14 +19,14 @@ bool conjugateGradientSolver_direct::systemChecking(int pointer)
 	return flag;
 }
 
-void conjugateGradientSolver_direct::freeMemory()
+void conjugateGradientSolver_OpenMP::freeMemory()
 {
 	for(int i=0; i<systemSize; i++)
 		delete[] matrix[i];
 	delete matrix;
 }
 
-bool conjugateGradientSolver_direct::stopCondition(double** _discrepancy)
+bool conjugateGradientSolver_OpenMP::stopCondition(double** _discrepancy)
 {
 	bool status(true);
 	for(int i=0; i<systemSize; i++)
@@ -35,7 +35,7 @@ bool conjugateGradientSolver_direct::stopCondition(double** _discrepancy)
 	return status;
 }
 
-double* conjugateGradientSolver_direct::getSolve(double** m, int size)
+double* conjugateGradientSolver_OpenMP::getSolve(double** m, int size)
 {
 	systemSize=size;
 	matrix=new double*[systemSize];

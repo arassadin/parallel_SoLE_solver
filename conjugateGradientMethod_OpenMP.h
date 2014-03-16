@@ -4,13 +4,13 @@
 #include<stdio.h>
 #include"helpful/matrixes/matrixSolver.h"
 
-class conjugateGradientSolver_direct
+class conjugateGradientSolver_OpenMP
 {
 public:
-	conjugateGradientSolver_direct();
+	conjugateGradientSolver_OpenMP();
 	double* getSolve(double**, int);
 	void setAccuracy(double);
-	~conjugateGradientSolver_direct();
+	~conjugateGradientSolver_OpenMP();
 	
 private:
 	int systemSize;

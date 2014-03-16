@@ -1,16 +1,16 @@
-#include"conjugateGradientMethod_direct.h"
+#include"conjugateGradientMethod_MPI.h"
 
-conjugateGradientSolver_direct::conjugateGradientSolver_direct()
+conjugateGradientSolver_MPI::conjugateGradientSolver_MPI()
 {
 	accuracy=0.0001;
 }
 
-void conjugateGradientSolver_direct::setAccuracy(double _accuracy)
+void conjugateGradientSolver_MPI::setAccuracy(double _accuracy)
 {
 	accuracy=_accuracy;
 }
 
-bool conjugateGradientSolver_direct::systemChecking(int pointer)
+bool conjugateGradientSolver_MPI::systemChecking(int pointer)
 {
 	bool flag=false;
 	for(int i=0; i<systemSize; i++)
@@ -19,14 +19,14 @@ bool conjugateGradientSolver_direct::systemChecking(int pointer)
 	return flag;
 }
 
-void conjugateGradientSolver_direct::freeMemory()
+void conjugateGradientSolver_MPI::freeMemory()
 {
 	for(int i=0; i<systemSize; i++)
 		delete[] matrix[i];
 	delete matrix;
 }
 
-bool conjugateGradientSolver_direct::stopCondition(double** _discrepancy)
+bool conjugateGradientSolver_MPI::stopCondition(double** _discrepancy)
 {
 	bool status(true);
 	for(int i=0; i<systemSize; i++)
@@ -35,7 +35,7 @@ bool conjugateGradientSolver_direct::stopCondition(double** _discrepancy)
 	return status;
 }
 
-double* conjugateGradientSolver_direct::getSolve(double** m, int size)
+double* conjugateGradientSolver_MPI::getSolve(double** m, int size)
 {
 	systemSize=size;
 	matrix=new double*[systemSize];

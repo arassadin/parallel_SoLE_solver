@@ -2,7 +2,7 @@
 #include<complex>
 #include<math.h>
 #include<stdio.h>
-//#include<mpi.h>
+#include<mpi.h>
 
 class sqrtMethodSolver_MPI
 {

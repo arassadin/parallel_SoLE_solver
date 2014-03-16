@@ -2,7 +2,7 @@
 
 sqrtMethodSolver_MPI::sqrtMethodSolver_MPI()
 {
-	
+
 }
 
 bool sqrtMethodSolver_MPI::systemChecking(int pointer)
@@ -30,6 +30,13 @@ void sqrtMethodSolver_MPI::freeAllMemory()
 
 double* sqrtMethodSolver_MPI::getSolve(double** m, int size)
 {
+	int currRank, rankQ;
+	  
+	MPI_Comm_size(MPI_COMM_WORLD, &rankQ);
+	MPI_Comm_rank(MPI_COMM_WORLD, &currRank); 
+	
+	if(currRank==0)
+	{
 	systemSize=size;	
 	if(systemSize<2)
 	{
@@ -97,4 +104,5 @@ double* sqrtMethodSolver_MPI::getSolve(double** m, int size)
 	freeAllMemory();
 		
 	return realSolve;
+	}
 }

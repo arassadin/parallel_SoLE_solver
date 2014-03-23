@@ -24,7 +24,6 @@ void sqrtMethodSolver_OpenMP::freeMatrix()
 void sqrtMethodSolver_OpenMP::freeAllMemory()
 {
 	freeMatrix();
-	delete tmpMatrix;
 	delete solve;
 }
 
@@ -70,18 +69,17 @@ double* sqrtMethodSolver_OpenMP::getSolve(double** m, int size)
 		return NULL;
 	}
 	
-	tmpMatrix=new std::complex<double>[systemSize+1];
 	double beforeTime=omp_get_wtime();
-	
 	matrix[0][0]=pow(matrix[0][0], 0.5);
 	#pragma omp parallel for
 	for(int j=1; j<systemSize+1; j++)
 		matrix[0][j]=matrix[0][j]/matrix[0][0];
 	for(int i=1; i<systemSize; i++)
 	{
-		#pragma omp parallel for
-		for(int j=i; j<systemSize+1; j++)
-			tmpMatrix[j]=matrix[i][j];
+		for(int j=0; j<systemSize+1; j++)
+			std::cout << matrix[0][j] << " ";
+		std::cout << std::endl;
+		
 		std::complex<double> sum(0.0, 0.0);
 		/*
 		double sum_r(0.0);
@@ -96,7 +94,7 @@ double* sqrtMethodSolver_OpenMP::getSolve(double** m, int size)
 			*/
 			sum+=pow(matrix[k][i], 2.0);
 		}
-		matrix[i][i]=pow(tmpMatrix[i]-sum, 0.5);
+		matrix[i][i]=pow(m[i][i]-sum, 0.5);
 		#pragma omp parallel for
 		for(int j=i+1; j<systemSize+1; j++)
 		{
@@ -114,7 +112,7 @@ double* sqrtMethodSolver_OpenMP::getSolve(double** m, int size)
 				*/
 				sum+=(matrix[k][i]*matrix[k][j]);
 			}
-			matrix[i][j]=(tmpMatrix[j]-sum)/matrix[i][i];
+			matrix[i][j]=(m[i][j]-sum)/matrix[i][i];
 		}
 	}
 	

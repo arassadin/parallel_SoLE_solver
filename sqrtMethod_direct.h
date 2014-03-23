@@ -13,7 +13,6 @@ public:
 private:
 	int systemSize;
 	std::complex<double>** matrix;
-	std::complex<double>* tmpMatrix;
 	std::complex<double>* solve;
 
 private:

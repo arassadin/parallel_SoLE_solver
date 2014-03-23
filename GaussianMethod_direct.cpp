@@ -1,8 +1,8 @@
-#include "GaussMethod.h"
+#include "GaussianMethod_direct.h"
 
-GaussMethodSolver:: GaussMethodSolver() { }
+GaussianMethodSolver_direct:: GaussianMethodSolver_direct() { }
 
-GaussMethodSolver:: ~GaussMethodSolver()
+GaussianMethodSolver_direct:: ~GaussianMethodSolver_direct()
 {	
 	delete [] solve;
 	
@@ -13,7 +13,7 @@ GaussMethodSolver:: ~GaussMethodSolver()
  	delete [] A;
 }
 
-double* GaussMethodSolver:: getSolve(double** Matrix, int SizeSystem)
+double* GaussianMethodSolver_direct:: getSolve(double** Matrix, int SizeSystem)
 {		
 		size = SizeSystem;
 		double** A = new double*[size];

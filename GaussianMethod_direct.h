@@ -1,10 +1,10 @@
 #include <iostream>
 
-class GaussMethodSolver
+class GaussianMethodSolver_direct
 {
 public:
-	GaussMethodSolver();
-	~GaussMethodSolver();
+	GaussianMethodSolver_direct();
+	~GaussianMethodSolver_direct();
 	double* getSolve(double**, int);
 		
 private:

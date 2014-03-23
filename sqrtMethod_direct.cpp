@@ -24,7 +24,6 @@ void sqrtMethodSolver_direct::freeMatrix()
 void sqrtMethodSolver_direct::freeAllMemory()
 {
 	freeMatrix();
-	delete tmpMatrix;
 	delete solve;
 }
 
@@ -59,17 +58,14 @@ double* sqrtMethodSolver_direct::getSolve(double** m, int size)
 				return NULL;
 			}
 			
-	tmpMatrix=new std::complex<double>[systemSize+1];
 	for(int i=0; i<systemSize; i++)
 	{
-		for(int j=i; j<systemSize+1; j++)
-			tmpMatrix[j]=matrix[i][j];
 		std::complex<double> sum(0.0, 0.0);
 		for(int k=0; k<i; k++)
 		{
 			sum+=pow(matrix[k][i], 2.0);
 		}
-		matrix[i][i]=pow(tmpMatrix[i]-sum, 0.5);
+		matrix[i][i]=pow(m[i][i]-sum, 0.5);
 		for(int j=i+1; j<systemSize+1; j++)
 		{
 			std::complex<double> sum(0.0,0.0);
@@ -77,7 +73,7 @@ double* sqrtMethodSolver_direct::getSolve(double** m, int size)
 			{
 				sum+=(matrix[k][i]*matrix[k][j]);
 			};
-			matrix[i][j]=(tmpMatrix[j]-sum)/matrix[i][i];
+			matrix[i][j]=(m[i][j]-sum)/matrix[i][i];
 		}
 	}
 	

@@ -80,30 +80,27 @@ double* sqrtMethodSolver_MPI::getSolve(double** m, int size)
 		return NULL;
 	}
 	
-		matrix[0][0]=pow(matrix[0][0], 0.5);
 	}
+		matrix[0][0]=pow(matrix[0][0], 0.5);
 	
 	if(rankQ<=systemSize)
 		jobFraction=(systemSize+1)/(rankQ-1);
 	if(jobFraction*(rankQ-1)<systemSize)
 		jobFraction++;
-	std::cout << "fraction: " << jobFraction << std::endl;
+	//std::cout << "fraction: " << jobFraction << std::endl;
 	
 	if(currRank==0)
 	{
 		MPI_Status s;
 		for(int j=1; j<systemSize+1; j++)
-		{
 			MPI_Recv(&matrix[0][j], 1, MPI_COMPLEX, MPI_ANY_SOURCE, j, MPI_COMM_WORLD, &s);
-			std::cout << "received: " << j << std::endl;
-		}
 	}
 	else
 	{
 		for(int j=0; j<jobFraction; j++)
 			if((currRank-1)*jobFraction+j < systemSize+1 && (currRank-1)*jobFraction+j != 0)
 			{
-				std::cout << "happend: " << (currRank-1)*jobFraction+j << std::endl;
+				//std::cout << "happend: " << (currRank-1)*jobFraction+j << std::endl;
 				matrix[0][(currRank-1)*jobFraction+j]/=matrix[0][0];
 				MPI_Send(&matrix[0][(currRank-1)*jobFraction+j], 1, MPI_COMPLEX, 0, (currRank-1)*jobFraction+j, MPI_COMM_WORLD);
 			}
@@ -111,9 +108,9 @@ double* sqrtMethodSolver_MPI::getSolve(double** m, int size)
 		
 	if(currRank==0)
 	{
-		for(int j=0; j<systemSize+1; j++)
+		/*for(int j=0; j<systemSize+1; j++)
 			std::cout << matrix[0][j] << " ";
-		std::cout << std::endl;
+		std::cout << std::endl;*/
 	
 	for(int i=1; i<systemSize; i++)
 	{
@@ -155,7 +152,7 @@ double* sqrtMethodSolver_MPI::getSolve(double** m, int size)
 		}
 	}
 	
-	std::cout << "Here " << currRank << std::endl;
+	//std::cout << "Here " << currRank << std::endl;
 	
 	if(currRank==0)
 	{

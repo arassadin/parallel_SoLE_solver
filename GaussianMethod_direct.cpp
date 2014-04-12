@@ -26,6 +26,7 @@ double* GaussianMethodSolver_direct:: getSolve(double** Matrix, int SizeSystem)
 				
 		double* solve = new double[size];
 		double temp;
+		unsigned int start_time =  clock();
 		
 		/// direct step
 		for(int i=0;i<size;i++)
@@ -52,6 +53,10 @@ double* GaussianMethodSolver_direct:: getSolve(double** Matrix, int SizeSystem)
 	   				temp = A[i][size] - temp;
 	   				solve[i] = temp/A[i][i];
 				}	
+	unsigned int end_time = clock(); // конечное время
+    unsigned int search_time = end_time - start_time; // искомое время
+    std::cout << "Algo time direct: "<<((float)search_time) / CLOCKS_PER_SEC  <<std::endl;
+				
     return solve;
 } 
 

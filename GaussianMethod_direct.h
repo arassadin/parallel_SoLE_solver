@@ -1,4 +1,5 @@
 #include <iostream>
+#include <ctime>
 
 class GaussianMethodSolver_direct
 {
